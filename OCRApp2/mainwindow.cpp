@@ -61,26 +61,30 @@ void MainWindow::on_gaussianSlider_valueChanged(int value)
     frame = gaussian_frame;
 }
 
-void MainWindow::on_lowThresholdSlider_valueChanged(int value)
+void MainWindow::on_upThresholdGS_sliderMoved(int position)
 {
-    highThreshValue = value;
-    cv::Mat canny_frame;
-    cv::Canny(frame, canny_frame, lowThreshValue, highThreshValue);
-    QImage image = QImage((uchar*) canny_frame.data, canny_frame.cols, canny_frame.rows, canny_frame.step, QImage::Format_Grayscale8);
+    upGrayscaleThrehValue = position;
+    cv::MatIterator_<uchar>it, end;
+    for(it = frame.begin<uchar>(), end = frame.end<uchar>(); it != end;++it) {
+         if ((*it) < lowGrayscaleThrehValue || (*it) > upGrayscaleThrehValue) (*it) = 0;
+    }
+    QImage image = QImage((uchar*) frame.data, frame.cols, frame.rows, frame.step, QImage::Format_Grayscale8);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
-    frame = canny_frame;
 }
 
-void MainWindow::on_highThresholdSlider_valueChanged(int value)
+void MainWindow::on_lowThresholdGs_sliderMoved(int position)
 {
-    lowThreshValue = value;
-    cv::Mat canny_frame;
-    cv::Canny(frame, canny_frame, lowThreshValue, highThreshValue);
-    QImage image = QImage((uchar*) canny_frame.data, canny_frame.cols, canny_frame.rows, canny_frame.step, QImage::Format_Grayscale8);
+    lowGrayscaleThrehValue = position;
+    cv::MatIterator_<uchar>it, end;
+    for(it = frame.begin<uchar>(), end = frame.end<uchar>(); it != end;++it) {
+        if (((*it) < lowGrayscaleThrehValue) || ((*it) > upGrayscaleThrehValue)) {
+            (*it) = 0;
+        }
+    }
+    QImage image = QImage((uchar*) frame.data, frame.cols, frame.rows, frame.step, QImage::Format_Grayscale8);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
-    frame = canny_frame;
 }
 
 void MainWindow::on_ocrBtn_clicked()
@@ -89,10 +93,11 @@ void MainWindow::on_ocrBtn_clicked()
     ocr->Init(NULL, "eng", tesseract::OEM_DEFAULT);
     ocr->SetPageSegMode(tesseract::PSM_AUTO);
     ocr->SetImage(frame.data, frame.cols, frame.rows, 1, frame.step);
-    QString outText = QString(ocr->GetUTF8Text());
+    std::string outText = std::string(ocr->GetUTF8Text());
+    QString result = QString::fromStdString(outText);
 
     QMessageBox mgBox;
-    mgBox.setText(outText);
+    mgBox.setText(result);
     mgBox.exec();
 
 //    QString outTextDir = QFileDialog::getSaveFileName(
@@ -113,3 +118,7 @@ void MainWindow::on_ocrBtn_clicked()
 //        out << outText;
 //    }
 }
+
+
+
+

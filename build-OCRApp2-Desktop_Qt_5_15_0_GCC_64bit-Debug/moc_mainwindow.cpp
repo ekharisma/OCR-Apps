@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[9];
-    char stringdata0[181];
+    QByteArrayData data[10];
+    char stringdata0[178];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,17 +38,17 @@ QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 23), // "on_grayscaleBtn_clicked"
 QT_MOC_LITERAL(4, 55, 30), // "on_gaussianSlider_valueChanged"
 QT_MOC_LITERAL(5, 86, 5), // "value"
-QT_MOC_LITERAL(6, 92, 34), // "on_lowThresholdSlider_valueCh..."
-QT_MOC_LITERAL(7, 127, 35), // "on_highThresholdSlider_valueC..."
-QT_MOC_LITERAL(8, 163, 17) // "on_ocrBtn_clicked"
+QT_MOC_LITERAL(6, 92, 17), // "on_ocrBtn_clicked"
+QT_MOC_LITERAL(7, 110, 28), // "on_upThresholdGS_sliderMoved"
+QT_MOC_LITERAL(8, 139, 8), // "position"
+QT_MOC_LITERAL(9, 148, 29) // "on_lowThresholdGs_sliderMoved"
 
     },
     "MainWindow\0on_openBtn_clicked\0\0"
     "on_grayscaleBtn_clicked\0"
     "on_gaussianSlider_valueChanged\0value\0"
-    "on_lowThresholdSlider_valueChanged\0"
-    "on_highThresholdSlider_valueChanged\0"
-    "on_ocrBtn_clicked"
+    "on_ocrBtn_clicked\0on_upThresholdGS_sliderMoved\0"
+    "position\0on_lowThresholdGs_sliderMoved"
 };
 #undef QT_MOC_LITERAL
 
@@ -69,17 +69,17 @@ static const uint qt_meta_data_MainWindow[] = {
        1,    0,   44,    2, 0x08 /* Private */,
        3,    0,   45,    2, 0x08 /* Private */,
        4,    1,   46,    2, 0x08 /* Private */,
-       6,    1,   49,    2, 0x08 /* Private */,
-       7,    1,   52,    2, 0x08 /* Private */,
-       8,    0,   55,    2, 0x08 /* Private */,
+       6,    0,   49,    2, 0x08 /* Private */,
+       7,    1,   50,    2, 0x08 /* Private */,
+       9,    1,   53,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    5,
-    QMetaType::Void, QMetaType::Int,    5,
-    QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void, QMetaType::Int,    8,
 
        0        // eod
 };
@@ -93,9 +93,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_openBtn_clicked(); break;
         case 1: _t->on_grayscaleBtn_clicked(); break;
         case 2: _t->on_gaussianSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->on_lowThresholdSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->on_highThresholdSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->on_ocrBtn_clicked(); break;
+        case 3: _t->on_ocrBtn_clicked(); break;
+        case 4: _t->on_upThresholdGS_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->on_lowThresholdGs_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }

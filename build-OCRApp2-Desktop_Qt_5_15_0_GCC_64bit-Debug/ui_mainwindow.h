@@ -19,6 +19,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,12 +34,12 @@ public:
     QLabel *imgPlaceholder;
     QSlider *gaussianSlider;
     QLabel *label;
-    QSlider *highThresholdSlider;
-    QLabel *label_2;
-    QSlider *lowThresholdSlider;
-    QLabel *label_3;
-    QLabel *label_4;
     QPushButton *ocrBtn;
+    QLabel *label_2;
+    QTextBrowser *textBrowser;
+    QSlider *lowThresholdGs;
+    QSlider *upThresholdGS;
+    QLabel *label_3;
     QMenuBar *menubar;
     QMenu *menuAplikasi_OCR;
     QStatusBar *statusbar;
@@ -64,7 +65,7 @@ public:
         imgPlaceholder->setGeometry(QRect(50, 30, 731, 441));
         gaussianSlider = new QSlider(centralwidget);
         gaussianSlider->setObjectName(QString::fromUtf8("gaussianSlider"));
-        gaussianSlider->setGeometry(QRect(240, 510, 160, 16));
+        gaussianSlider->setGeometry(QRect(260, 510, 160, 16));
         gaussianSlider->setMinimum(3);
         gaussianSlider->setMaximum(9);
         gaussianSlider->setSingleStep(2);
@@ -72,32 +73,31 @@ public:
         gaussianSlider->setOrientation(Qt::Horizontal);
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(280, 530, 101, 18));
-        highThresholdSlider = new QSlider(centralwidget);
-        highThresholdSlider->setObjectName(QString::fromUtf8("highThresholdSlider"));
-        highThresholdSlider->setGeometry(QRect(510, 510, 160, 16));
-        highThresholdSlider->setMinimum(101);
-        highThresholdSlider->setMaximum(255);
-        highThresholdSlider->setSingleStep(5);
-        highThresholdSlider->setOrientation(Qt::Horizontal);
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(570, 530, 58, 18));
-        lowThresholdSlider = new QSlider(centralwidget);
-        lowThresholdSlider->setObjectName(QString::fromUtf8("lowThresholdSlider"));
-        lowThresholdSlider->setGeometry(QRect(510, 480, 160, 16));
-        lowThresholdSlider->setMaximum(100);
-        lowThresholdSlider->setSingleStep(5);
-        lowThresholdSlider->setOrientation(Qt::Horizontal);
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(410, 480, 91, 18));
-        label_4 = new QLabel(centralwidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(410, 510, 101, 18));
+        label->setGeometry(QRect(300, 530, 101, 18));
         ocrBtn = new QPushButton(centralwidget);
         ocrBtn->setObjectName(QString::fromUtf8("ocrBtn"));
         ocrBtn->setGeometry(QRect(700, 480, 80, 26));
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(430, 480, 81, 18));
+        textBrowser = new QTextBrowser(centralwidget);
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setGeometry(QRect(210, 560, 256, 192));
+        lowThresholdGs = new QSlider(centralwidget);
+        lowThresholdGs->setObjectName(QString::fromUtf8("lowThresholdGs"));
+        lowThresholdGs->setGeometry(QRect(510, 510, 160, 16));
+        lowThresholdGs->setMaximum(125);
+        lowThresholdGs->setOrientation(Qt::Horizontal);
+        upThresholdGS = new QSlider(centralwidget);
+        upThresholdGS->setObjectName(QString::fromUtf8("upThresholdGS"));
+        upThresholdGS->setGeometry(QRect(510, 480, 160, 16));
+        upThresholdGS->setMinimum(126);
+        upThresholdGS->setMaximum(255);
+        upThresholdGS->setSliderPosition(255);
+        upThresholdGS->setOrientation(Qt::Horizontal);
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(430, 510, 81, 18));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -113,6 +113,8 @@ public:
 
         retranslateUi(MainWindow);
         QObject::connect(closeBtn, SIGNAL(clicked()), MainWindow, SLOT(close()));
+        QObject::connect(upThresholdGS, SIGNAL(sliderMoved(int)), label_2, SLOT(setNum(int)));
+        QObject::connect(lowThresholdGs, SIGNAL(sliderMoved(int)), label_3, SLOT(setNum(int)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -125,10 +127,9 @@ public:
         grayscaleBtn->setText(QCoreApplication::translate("MainWindow", "Grayscale", nullptr));
         imgPlaceholder->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Gaussian Slider", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Canny", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "Low Threshold", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "High Threshold", nullptr));
         ocrBtn->setText(QCoreApplication::translate("MainWindow", "OCR", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Upper Thres", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Lower Thres", nullptr));
         menuAplikasi_OCR->setTitle(QCoreApplication::translate("MainWindow", "Aplikasi OCR", nullptr));
     } // retranslateUi
 

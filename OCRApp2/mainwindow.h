@@ -25,17 +25,17 @@ private slots:
 
     void on_gaussianSlider_valueChanged(int value);
 
-    void on_lowThresholdSlider_valueChanged(int value);
-
-    void on_highThresholdSlider_valueChanged(int value);
-
     void on_ocrBtn_clicked();
+
+    void on_upThresholdGS_sliderMoved(int position);
+
+    void on_lowThresholdGs_sliderMoved(int position);
 
 private:
     QString filePath;
     cv::Mat frame;
-    int highThreshValue = 5;
-    int lowThreshValue = 105;
+    int lowGrayscaleThrehValue = 0;
+    int upGrayscaleThrehValue = 255;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
