@@ -27,13 +27,14 @@ private slots:
 
     void on_ocrBtn_clicked();
 
-    void on_upThresholdGS_sliderMoved(int position);
+    void on_upThresholdGS_valueChanged(int value);
 
-    void on_lowThresholdGs_sliderMoved(int position);
+    void on_lowThresholdGs_valueChanged(int value);
 
 private:
     QString filePath;
     cv::Mat frame;
+    cv::Mat procFrame;
     int lowGrayscaleThrehValue = 0;
     int upGrayscaleThrehValue = 255;
     Ui::MainWindow *ui;

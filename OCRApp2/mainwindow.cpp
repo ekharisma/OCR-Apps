@@ -29,14 +29,12 @@ void MainWindow::on_openBtn_clicked()
                 this,
                 tr("Pilih Gambar"),
                 "/home/kayugasan/Desktop",
-                tr("Image Files (*.png *.jpg *.bmp)")
+                tr("Image Files (*.png *.jpg *.bmp *.jpeg)")
                 );
     std::string filePathCV = filePath.toStdString();
     frame = cv::imread(filePathCV);
     QPixmap pixmap(filePath);
     ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
-
-
 }
 
 void MainWindow::on_grayscaleBtn_clicked()
@@ -53,39 +51,17 @@ void MainWindow::on_grayscaleBtn_clicked()
 
 void MainWindow::on_gaussianSlider_valueChanged(int value)
 {
-    cv::Mat gaussian_frame = frame;
+    cv::Mat gaussian_frame;
+    frame.copyTo(gaussian_frame);
     cv::GaussianBlur(gaussian_frame, gaussian_frame, cv::Size(value, value), 0, 0);
     QImage image = QImage((uchar*) gaussian_frame.data, gaussian_frame.cols, gaussian_frame.rows, gaussian_frame.step, QImage::Format_Grayscale8);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
     frame = gaussian_frame;
+    QString s = QString::number(value);
+    ui->label->setText(s);
 }
 
-void MainWindow::on_upThresholdGS_sliderMoved(int position)
-{
-    upGrayscaleThrehValue = position;
-    cv::MatIterator_<uchar>it, end;
-    for(it = frame.begin<uchar>(), end = frame.end<uchar>(); it != end;++it) {
-         if ((*it) < lowGrayscaleThrehValue || (*it) > upGrayscaleThrehValue) (*it) = 0;
-    }
-    QImage image = QImage((uchar*) frame.data, frame.cols, frame.rows, frame.step, QImage::Format_Grayscale8);
-    QPixmap pixmap = QPixmap::fromImage(image);
-    ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
-}
-
-void MainWindow::on_lowThresholdGs_sliderMoved(int position)
-{
-    lowGrayscaleThrehValue = position;
-    cv::MatIterator_<uchar>it, end;
-    for(it = frame.begin<uchar>(), end = frame.end<uchar>(); it != end;++it) {
-        if (((*it) < lowGrayscaleThrehValue) || ((*it) > upGrayscaleThrehValue)) {
-            (*it) = 0;
-        }
-    }
-    QImage image = QImage((uchar*) frame.data, frame.cols, frame.rows, frame.step, QImage::Format_Grayscale8);
-    QPixmap pixmap = QPixmap::fromImage(image);
-    ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
-}
 
 void MainWindow::on_ocrBtn_clicked()
 {
@@ -100,25 +76,55 @@ void MainWindow::on_ocrBtn_clicked()
     mgBox.setText(result);
     mgBox.exec();
 
-//    QString outTextDir = QFileDialog::getSaveFileName(
-//                this,
-//                tr("Simpan Dimana ?"),
-//                tr("txt file(*.txt);;All Files (*)")
-//                );
+    QString outTextDir = QFileDialog::getSaveFileName(
+                this,
+                tr("Simpan Dimana ?"),
+                tr("txt file(*.txt);;All Files (*)")
+                );
 
-//    if (outTextDir.isEmpty()) return ;
-//    else {
-//        QFile file(outTextDir);
-//        if (!file.open(QIODevice::WriteOnly)) {
-//            QMessageBox::information(this, tr("Tidak bisa dibuka"), file.errorString());
-//            return;
-//        }
-//        QDataStream out(&file);
-//        out.setVersion(QDataStream::Qt_4_5);
-//        out << outText;
-//    }
+    if (outTextDir.isEmpty()) return ;
+    else {
+        QFile file(outTextDir);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Tidak bisa dibuka"), file.errorString());
+            return;
+        }
+        QDataStream out(&file);
+        out.setVersion(QDataStream::Qt_4_5);
+        out << result;
+    }
 }
 
+void MainWindow::on_upThresholdGS_valueChanged(int value)
+{
+    upGrayscaleThrehValue = value;
+    cv::Mat _frame;
+    frame.copyTo(_frame);
+        cv::MatIterator_<uchar>it, end;
+        for(it = _frame.begin<uchar>(), end = _frame.end<uchar>(); it != end;++it) {
+             if ((*it) < lowGrayscaleThrehValue || (*it) > upGrayscaleThrehValue) (*it) = 0;
+        }
+        QImage image = QImage((uchar*) _frame.data, _frame.cols, _frame.rows, _frame.step, QImage::Format_Grayscale8);
+        QPixmap pixmap = QPixmap::fromImage(image);
+        ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
+        QString s = QString::number(upGrayscaleThrehValue);
+        ui->label_2->setText(s);
+}
 
-
-
+void MainWindow::on_lowThresholdGs_valueChanged(int value)
+{
+    lowGrayscaleThrehValue = value;
+    cv::Mat _frame;
+    frame.copyTo(_frame);
+        cv::MatIterator_<uchar>it, end;
+        for(it = _frame.begin<uchar>(), end = _frame.end<uchar>(); it != end;++it) {
+            if (((*it) < lowGrayscaleThrehValue) || ((*it) > upGrayscaleThrehValue)) {
+                (*it) = 0;
+            }
+        }
+        QImage image = QImage((uchar*) _frame.data, _frame.cols, _frame.rows, _frame.step, QImage::Format_Grayscale8);
+        QPixmap pixmap = QPixmap::fromImage(image);
+        ui->imgPlaceholder->setPixmap(pixmap.scaled(750, 450, Qt::KeepAspectRatio));
+        QString s = QString::number(lowGrayscaleThrehValue);
+        ui->label_3->setText(s);
+}

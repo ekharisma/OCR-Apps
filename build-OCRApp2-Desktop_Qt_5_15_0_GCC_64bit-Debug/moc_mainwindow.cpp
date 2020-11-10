@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[10];
-    char stringdata0[178];
+    QByteArrayData data[9];
+    char stringdata0[171];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,16 +39,15 @@ QT_MOC_LITERAL(3, 31, 23), // "on_grayscaleBtn_clicked"
 QT_MOC_LITERAL(4, 55, 30), // "on_gaussianSlider_valueChanged"
 QT_MOC_LITERAL(5, 86, 5), // "value"
 QT_MOC_LITERAL(6, 92, 17), // "on_ocrBtn_clicked"
-QT_MOC_LITERAL(7, 110, 28), // "on_upThresholdGS_sliderMoved"
-QT_MOC_LITERAL(8, 139, 8), // "position"
-QT_MOC_LITERAL(9, 148, 29) // "on_lowThresholdGs_sliderMoved"
+QT_MOC_LITERAL(7, 110, 29), // "on_upThresholdGS_valueChanged"
+QT_MOC_LITERAL(8, 140, 30) // "on_lowThresholdGs_valueChanged"
 
     },
     "MainWindow\0on_openBtn_clicked\0\0"
     "on_grayscaleBtn_clicked\0"
     "on_gaussianSlider_valueChanged\0value\0"
-    "on_ocrBtn_clicked\0on_upThresholdGS_sliderMoved\0"
-    "position\0on_lowThresholdGs_sliderMoved"
+    "on_ocrBtn_clicked\0on_upThresholdGS_valueChanged\0"
+    "on_lowThresholdGs_valueChanged"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,15 +70,15 @@ static const uint qt_meta_data_MainWindow[] = {
        4,    1,   46,    2, 0x08 /* Private */,
        6,    0,   49,    2, 0x08 /* Private */,
        7,    1,   50,    2, 0x08 /* Private */,
-       9,    1,   53,    2, 0x08 /* Private */,
+       8,    1,   53,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    8,
-    QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int,    5,
 
        0        // eod
 };
@@ -94,8 +93,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->on_grayscaleBtn_clicked(); break;
         case 2: _t->on_gaussianSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->on_ocrBtn_clicked(); break;
-        case 4: _t->on_upThresholdGS_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->on_lowThresholdGs_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->on_upThresholdGS_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->on_lowThresholdGs_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
